@@ -1,10 +1,18 @@
 # Assignment 1 Report
 
+**Team member:**
 
+- CHENG Xinyi 	3035888449
 
-## 1. The market model
+- GUO Jing 		3035878860
 
-### a.
+- YAN Yangtian 3035888231
+
+## Solution:
+
+### 1. The market model
+
+#### a.
 
 - **Risk premium**
 
@@ -19,7 +27,7 @@ Dobrynskaya, Victoria, Dynamic Momentum and Contrarian Trading (September 22, 20
 
 [Dobrynskaya, Victoria, Dynamic Momentum and Contrarian Trading (September 22, 2017). Higher School of Economics Research Paper No. WP BRP 61/FE/2017](https://ssrn.com/abstract=3041227)
 
-### b.
+#### b.
 
 ```python
 #Cumulative Average Return
@@ -47,7 +55,7 @@ Considering that cumulative return is more rational in financial word than simpl
 
 - Annualized Sharpe ratio: 0.247(0.24741705357583085)
 
-### c.
+#### c.
 
 Here are some reasons for different performance:
 
@@ -58,11 +66,11 @@ Here are some reasons for different performance:
 3. Liquidity: when transaction volume is high, you may not be able to buy or sell the target amount of stocks the strategy suggests, especially for AQR. The average transaction price is much higher (if you buy) than expected, leading to a lower return than retailer.
    In summary, total trading cost leads to different performance, but whether AQR or retailers have better performance depends on many different factors.
 
-### d.
+#### d.
 
 If the market goes up by 1%, the momentum will go up by  $\beta_1\%$, which is -0.2542%.
 
-### e.
+#### e.
 
 ```python
 import statsmodels.formula.api as smf
@@ -71,11 +79,11 @@ smf.ols('mom ~ mkt_rf', data=ff).fit().summary()
 
 By using the regression code line, the market beta of the momentum strategy is -0.2542.
 
-### f.
+#### f.
 
 The $\alpha$ represents the excess return of our model (if our model only has $mkt-r_f$  as factor. The intercept is 0.0076(monthly $\alpha$), by applying the simple computation $(1+0.0076)^{12}-1=0.0951$, we can find that the annualized excess return is 9.51%.
 
-### g.
+#### g.
 
 We can use t-test to test the significance of regression coefficient. 
 
@@ -91,7 +99,7 @@ Besides, we can find the t-statistic of the intercept coefficient $t_\alpha=6.07
 
 In conclusion, the statistical relations we uncovered in (b) and (c) ***are statistically significant***.
 
-### h.
+#### h.
 
 Under the hypothesis of the single factor regression, we can conclude that the  returns will go up by $-4\beta_1\% =  -4\%*-0.2542 = 1.0168\%$. 
 
@@ -99,9 +107,9 @@ However, the hypothesis of the regression model is that the residual item $\vare
 
 In conclusion, the value $-4\beta_1\%$ may be be inaccurate compared with the condition in real world.
 
-## 2. The Fama-French (1993) three-factor model
+### 2. The Fama-French (1993) three-factor model
 
-### a.
+#### a.
 
 The momentum will only be expected to go up by $\beta_1\%$ if the value of SMB and HML is constant.
 
@@ -109,7 +117,7 @@ However, if the $r_{mkt}$ goes up, it can affect the value of  SMB and HML, whic
 
 In conclusion, whether the momentum will be expected to go up by $\beta_1\%$ depends, but actually in real word, $\beta_1\%$ usually is not a precise value.
 
-### b.
+#### b.
 
 ***Small minus big (SMB)*** is the excess return that smaller market capitalization companies return versus larger companies. Since in the long-term, small-cap companies tend to see higher returns than large-cap companies. 
 
@@ -123,9 +131,9 @@ Reference:
 
 ### c.
 
-## 3.
+### 3.
 
-### 3.1
+#### 3.1
 
 ```python
 smf.ols('mystery_meat ~ mkt_rf + smb + hml + rmw + cma + mom', data=my_meat).fit().summary()
@@ -153,6 +161,6 @@ So the exposure of this strategy to the Fama French factors is:
 
   rmw: -0.5
 
-### 3.2
+#### 3.2
 
 From the result of the regression, we can see that in this strategy, the mystery_meat item can be explained by the above four factors($mkt\_rf, smb, rmw, cma$), theoretically there will be no $\alpha$ in the regression. Therefore, ***the intercept  value -0.0010*** is the transaction cost.
