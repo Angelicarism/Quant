@@ -12,11 +12,11 @@ To replicate the four tables in the paper, we mainly used five data files.
 
 |                                                              | Abstract | Time Range | Shape | Used Table       |
 | ------------------------------------------------------------ | -------- | ---------- | ----- | ---------------- |
-| ibes.det_epsus.parquet                                       |          |            |       | table 1, table2  |
-| worldscope2.wrds_ws_company.parquet                          |          |            |       | table 1          |
-| comp_fundq.parquet                                           |          |            |       | table 1, table 2 |
-| ff_four_factor_monthly.parquet                               |          |            |       | table 3, table 4 |
-| crsp_msf.parquet（这个有用到么，我看代码里面好像读了之后就没用了 |          |            |       |                  |
+| ibes.det_epsus.parquet                                       |The I/B/E/S Analyst-BY -Analyst  Historical earnings estimate database    |1980 to 2021           |(29359003, 27)       | table 1, table2  |
+| worldscope2.wrds_ws_company.parquet                          |World scope database for global companies         |   1998 to 2021        |(107437, 67)       | table 1          |
+| comp_fundq.parquet                                           |Compustat North America fundamental data         |1961 to 2021           |(1902784, 647)      | table 1, table 2 |
+| ff_four_factor_monthly.parquet                               |Fama French four factors monthly total return         |1926 to 2021            |(1147, 8)       | table 3, table 4 |
+
 
 
 
