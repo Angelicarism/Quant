@@ -2,7 +2,7 @@
 
 - Paper Name: EARNINGS EXTRAPOLATION AND PREDICTABLE STOCK MARKET RETURNS(Author: Hongye Guo)
 
-- Reproduciton: Table1, Table2, Table3, Table4
+- Reproduction: Table1, Table2, Table3, Table4
 
 - Author: CHENG XINYI 3035888449,GUO JING 3035878860,YAN YANGTIAN 3035888231
 
@@ -24,7 +24,9 @@ To replicate the four tables in the paper, we mainly used five data files.
 
 ## 2.1 Method
 
-For table 1, it describes the company-fiscal period counted by fiscal period end month and it contains two markets: US market and global market. Firstly, we did data preprocessing. We dropped the duplicates and the null data. Then we defined a classification function to classify months into the three different groups. After we finished the steps and got the data we wanted in both US market and global market, we concatenated them into one table and eventually did the table 1 replication.
+For table 1, it describes the company-fiscal period counted by fiscal period end month and it contains two markets: US market and global market. 
+
+Firstly, we did data preprocessing. We merged comp and ibes data and dropped the duplicates as well as the null in order to ensure the consistency of data when table 2 calculates the reporting date, while the global market data does not require subsequent operations, so only one table is used. Then we defined a classification function to classify months into the three different groups. After we finished the steps and got the data we wanted in both US market and global market, we concatenated them into one table and eventually did the table 1 replication.
 
 ## 2.2 Main Code
 
@@ -94,6 +96,8 @@ table1_global=pd.DataFrame({"Count":[result1[0][0]+result[0][0],result1[1][0]+re
 
 ![1.png](https://github.com/Angelicarism/Quant/blob/main/1.png?raw=true)
 
+
+
 # 3. Table 2 Reproduction
 
 ## 3.1 Method
@@ -130,9 +134,9 @@ result_nofilter=countMonth(no_filter,"anndats_act")
 
 ## 3.4 Critical Analysis in Table 1 and Table 2
 
-- **Insufficient Data:** The volume of data we used is less than the origin paper, so the result is a slight different from the paper's table. But it does not have a significant influence, cause the point is to focus on the method not the result.
-
-- within one month的问题
+- **Insufficient Data:**  For US market, we only got 400 thousands data left after we merged the comp and ibes datafile, compared with nearly 880 thousands in the paper. So the result of table 1 is different from that in paper. As for global market, in the world scope database, we have only 100 thousands data except the US market. Therefore, adding together, we got 500 thousands data in total. And we think that in original paper, the author used the same sum-up method, which refers to combine US market and global market. Fortunately, the result is similar in magnitude and percentage, which confirmed our conjecture. 
+- **Deciding the reporting-lag problem:** After we merged the two databases, we should filter the reporting day in according to the fiscal month, which does not exist in the two databases. Therefore, we used the same method as the author described in the paper: which decides only the fiscal month closest to the reporting date and earlier than the reporting data can be regarded as the month in which the report was disclosed. And the concern is that in actual can company report so quickly, as we find that sometimes it it only 4 or 5 days between the fiscal month and the reporting date, which is the point we are skeptical.
+- **Mismatch between process and conclusion:** When working on table 2, we find that the author used the reporting lag less or equal to 92 days, but he concluded in the paper that it was within one month, which is inconsistent.
 
 # 4. Table 3 Reproduction
 
@@ -150,8 +154,6 @@ This table describes the Lead-lag relations of US monthly market returns. In thi
   mkt_t = \alpha + \sum_{j=1}^{4} \beta_j mkt_{nm(t, j)} + \sum_{j=1}^{4} \gamma_j mkt_{nm(t, j)}*I_t^{nm} + \delta I_t^{nm} + \epsilon_t
   $$
   where $$ I_t^{nm} $$ is a dummy variable taking the value of 1 when month t is newsy.
-
-- 
 
 ## 4.2 Main Code
 
@@ -211,12 +213,6 @@ diff=smf.ols('mkt ~ mkt_nm1*state+mkt_nm2*state+ mkt_nm3*state+mkt_nm4*state +st
 
 ![3.png](https://github.com/Angelicarism/Quant/blob/main/3.png?raw=true)
 
-## 4.4 Critical Analysis
-
-In this part, we faced problems in realizing the Difference column, we first ran regression just on  mkt_nm, the same regression as in colunm 1 , and we got the wrong result. Then we added dummy variable: state. The regression was based on 9 columns as showed in the codes.
-
-可能需要补充下用dummy variable的理由
-
 # 5. Table 4 Reproduction
 
 ## 5.1 Method
@@ -260,6 +256,6 @@ second_half_7=smf.ols('mkt ~ mkt_nm_total + mkt_nm_total_state + state', data=se
 
 ![4.png](https://github.com/Angelicarism/Quant/blob/main/4.png?raw=true)
 
-## 5.4 Critical Analysis
+## 5.4 Critical Analysis in Table 3 and Table 4
 
-暂时没想到...
+Table 3 and table 4 focus on regression, which is not too difficult. We used more data in this part and concluded the same as the original article, which confirmed the conclusions.
